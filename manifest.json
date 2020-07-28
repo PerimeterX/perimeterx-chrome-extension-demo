@@ -1,0 +1,17 @@
+{
+    "manifest_version": 2,
+    "name": "Whack-A-Bot",
+    "description": "PerimeterX integration demonstration for Chrome Extensions",
+    "version": "1.0",
+    "icons": {
+        "16": "px-icon.png",
+        "48": "px-icon.png",
+        "128": "px-icon.png"
+    },
+    "browser_action": {
+        "default_icon": "px-icon.png",
+        "default_popup": "popup.html"
+    },
+    "content_security_policy": "script-src 'self' https://www.recaptcha.net https://www.gstatic.com https://client.perimeterx.net https://captcha.px-cdn.net https://client.px-cdn.net https://collector-px5d4lyytj.px-cloud.net; object-src 'self'",
+    "permissions": ["activeTab"]
+}

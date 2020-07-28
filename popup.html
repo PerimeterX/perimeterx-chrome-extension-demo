@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Whack A Mole!</title>
+        <link
+            href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700"
+            rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="style.css" />
+        <script src="game.js"></script>
+        <script src="networkManager.js"></script>
+        <script src="popup.js"></script>
+    </head>
+
+    <body>
+        <div class="mainContent">
+            <div class="header">
+                <h1>Whack-a-Bot! <span class="score">0</span></h1>
+            </div>
+            <div class="controls">
+                <button class="btnStart btn btn-lg btn-light">Start!</button>
+                <button class="btnHighscore btn btn-lg btn-light">
+                    Highscore!
+                </button>
+            </div>
+            <div class="playArea hidden">
+                <div class="hole hole1">
+                    <div class="bot"></div>
+                </div>
+                <div class="hole hole2">
+                    <div class="bot"></div>
+                </div>
+                <div class="hole hole3">
+                    <div class="bot"></div>
+                </div>
+                <div class="hole hole4">
+                    <div class="bot"></div>
+                </div>
+                <div class="hole hole5">
+                    <div class="bot"></div>
+                </div>
+                <div class="hole hole6">
+                    <div class="bot"></div>
+                </div>
+            </div>
+            <div class="highscore hidden">
+                <div class="loader">Loading...</div>
+            </div>
+            <div class="endGame hidden">
+                <div class="loader hidden">Loading...</div>
+                <div class="endGameContent">
+                    <h2>
+                        Your final score is <span class="endScore">0</span
+                        ><span> 🎉🎊</span>
+                    </h2>
+                    <input
+                        class="form-control"
+                        type="text"
+                        placeholder="Name"
+                        maxlength="3"
+                    />
+                    <button class="btnSubmit btn btn-lg btn-light">
+                        Submit!
+                    </button>
+                </div>
+                <div class="theEnd hidden">
+                    <h2>Thank you for playing! 🕹</h2>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
