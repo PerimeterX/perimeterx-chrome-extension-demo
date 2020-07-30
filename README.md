@@ -66,7 +66,7 @@ Advanced Blocking Response occurs when a request that is marked for blocking con
 
 ### Integration
 
-To render the challenge element upon reeving an Advanced Blocking Response (ABR) follow these steps:
+To render the challenge element upon receving an Advanced Blocking Response (ABR) follow these steps:
 
 1. In your networking layer, make sure you handle errors and verify the response code received. An ABR will always have the 403 status code. The example in this repository uses `fetch`, and always sends back the status code and body in response to network calls (`networkManager.js` lines 16-19)
 2. Add the following `window` properties:
