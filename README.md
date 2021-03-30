@@ -17,7 +17,7 @@
 
 ## Getting Started
 
-To integrate the PerimeterX JavaScript and reCaptcha sensors, add the following snippet to the Chrome Extension main .js file:
+To integrate the PerimeterX JavaScript sensor and Human Challenge, add the following snippet to the Chrome Extension main .js file:
 
 ```javascript
 (function () {
@@ -108,7 +108,7 @@ window._pxOnCaptchaSuccess = function (isValid) {
 
 To set the element's language code, use the `window._pxSelectedLocale = '<languageCode>';` property.
 
-> A list of supported languages can be found [here](https://developers.google.com/recaptcha/docs/language)
+> A list of supported languages can be found [here](https://docs.perimeterx.com/pxconsole/docs/human-challenge#section-18-n-internationalization-and-localization)
 
 ### Customizing the Challenege
 
