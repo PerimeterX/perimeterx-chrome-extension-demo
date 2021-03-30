@@ -24,22 +24,17 @@ To integrate the PerimeterX JavaScript and reCaptcha sensors, add the following 
     // set according to your PerimeterX appid
     window._pxAppId = '<PerimeterX App id>';
     // sets PerimeterX captcha mode to on demand
-    window.pxRenderRecaptchaOnDemand = true;
+    window.pxHumanChallengeOnDemand = true;
     // required PerimeterX scripts
-    let px = document.createElement('script');
-    px.type = 'text/javascript';
-    px.src = 'https://client.perimeterx.net/<PerimeterX App id>/main.min.js';
-    let s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(px, s);
     let pxCaptcha = document.createElement('script');
     pxCaptcha.type = 'text/javascript';
-    pxCaptcha.src =
-        'https://captcha.px-cdn.net/<PerimeterX App id>/captcha.js?a=c&m=0';
-    s.parentNode.insertBefore(pxCaptcha, null);
-    // prevents PerimeterX sensor from dynamically loading reCaptcha
-    const recaptchaScript = document.createElement('script');
-    recaptchaScript.src = `https://www.recaptcha.net/recaptcha/api.js?render=explicit`;
-    s.insertBefore(recaptchaScript, null);
+    pxCaptcha.src = '/scripts/captcha.js';
+    let s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(pxCaptcha, s);
+    let sensor = document.createElement('script');
+    sensor.type = 'text/javascript';
+    sensor.src = '/scripts/main.min.js';
+    s.parentNode.insertBefore(sensor, null);
 })();
 ```
 
@@ -92,7 +87,7 @@ To render the challenge element upon receving an Advanced Blocking Response (ABR
 
     > `challengeDiv` is the HTML element you want to append the challenge element to.
 
-4. Call the `window.pxRenderRecaptcha();` global method to render the challenge.
+4. Call the `window.pxRenderHumanChallenge();` global method to render the challenge.
 
 ### Challenge Result Callback
 
@@ -115,6 +110,6 @@ To set the element's language code, use the `window._pxSelectedLocale = '<langua
 
 > A list of supported languages can be found [here](https://developers.google.com/recaptcha/docs/language)
 
-### Challenge Element Theme
+### Customizing the Challenege
 
-To set the element's theme (`dark` or `light`), use the `window._pxreCaptchaTheme='<theme>';` property.
+To customize the Human Challenge element, refer to the guide [here](https://docs.perimeterx.com/pxconsole/docs/human-challenge#section-customization)

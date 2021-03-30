@@ -3,23 +3,26 @@
     window._pxAppId = 'PX1KuevgLk';
 
     // sets PerimeterX captcha mode to on demand
-    window.pxRenderRecaptchaOnDemand = true;
+    window.pxHumanChallengeOnDemand = true;
+
+    // save the PX cookie to local storage
+    // will be used later to append the cookie on XHR request
+    window.PX1KuevgLk_asyncInit = function (px) {
+        px.Events.on('risk', function (risk, name) {
+            localStorage.setItem('pxcookie', `${name}=${risk}`);
+        });
+    };
 
     // required PerimeterX scripts
-    let px = document.createElement('script');
-    px.type = 'text/javascript';
-    px.src = 'https://client.perimeterx.net/PX1KuevgLk/main.min.js';
-    let s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(px, s);
     let pxCaptcha = document.createElement('script');
     pxCaptcha.type = 'text/javascript';
-    pxCaptcha.src = 'https://captcha.px-cdn.net/PX1KuevgLk/captcha.js?a=c&m=0';
-    s.parentNode.insertBefore(pxCaptcha, null);
-
-    // prevents PerimeterX sensor from dynamically loading recaptcha
-    const recaptchaScript = document.createElement('script');
-    recaptchaScript.src = `https://www.recaptcha.net/recaptcha/api.js?render=explicit`;
-    s.insertBefore(recaptchaScript, null);
+    pxCaptcha.src = '/scripts/captcha.js';
+    let s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(pxCaptcha, s);
+    let sensor = document.createElement('script');
+    sensor.type = 'text/javascript';
+    sensor.src = '/scripts/main.min.js';
+    s.parentNode.insertBefore(sensor, null);
 })();
 
 document.addEventListener(
@@ -75,40 +78,24 @@ async function submitHighscore() {
     if (name.value.length == 0) {
         alert('Please enter a name.');
     } else {
-        highscoreContent
-            .querySelector('.btnSubmit')
-            .setAttribute('disabled', 'disabled');
-        highscoreContent
-            .querySelector('.endGameContent')
-            .classList.add('hidden');
+        highscoreContent.querySelector('.btnSubmit').setAttribute('disabled', 'disabled');
+        highscoreContent.querySelector('.endGameContent').classList.add('hidden');
         highscoreContent.querySelector('.loader').classList.remove('hidden');
         const body = {
             name: name.value,
             score: score,
         };
-        const result = await makeNetworkCall(
-            '/api/highscore/submit',
-            'POST',
-            body
-        );
+        const result = await makeNetworkCall('/api/highscore/submit', 'POST', body);
         // PerimeterX block
         if (result.status === 403) {
-            highscoreContent
-                .querySelector('.endGameContent')
-                .classList.add('hidden');
+            highscoreContent.querySelector('.endGameContent').classList.add('hidden');
             generatePXContent(result.body, highscoreContent, async () => {
-                highscoreContent
-                    .querySelector('.challenge')
-                    .classList.add('hidden');
-                highscoreContent
-                    .querySelector('.theEnd')
-                    .classList.remove('hidden');
+                highscoreContent.querySelector('.challenge').classList.add('hidden');
+                highscoreContent.querySelector('.theEnd').classList.remove('hidden');
             });
         } else {
             highscoreContent.querySelector('.loader').classList.add('hidden');
-            highscoreContent
-                .querySelector('.theEnd')
-                .classList.remove('hidden');
+            highscoreContent.querySelector('.theEnd').classList.remove('hidden');
         }
     }
 }
@@ -120,15 +107,11 @@ async function showHighscore() {
     let result = await makeNetworkCall('/api/highscore');
     if (result.status === 403) {
         generatePXContent(result.body, highscoreContent, async () => {
-            highscoreContent
-                .querySelector('.loader')
-                .classList.remove('hidden');
+            highscoreContent.querySelector('.loader').classList.remove('hidden');
             result = await makeNetworkCall('/api/highscore');
             renderHighScore(highscoreContent, result.body);
             highscoreContent.querySelector('.loader').classList.add('hidden');
-            highscoreContent
-                .querySelector('.challenge')
-                .classList.add('hidden');
+            highscoreContent.querySelector('.challenge').classList.add('hidden');
         });
     } else {
         renderHighScore(highscoreContent, result.body);

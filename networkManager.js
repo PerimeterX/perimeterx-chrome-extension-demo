@@ -1,10 +1,13 @@
 const baseUrl = 'https://www.whackabot.xyz';
 
 async function makeNetworkCall(path, method = 'GET', body) {
+    // try to append the cookie saved in local strage on the request.
+    // use the pre-defined x-px-cookie header
     const options = {
         method,
         headers: {
             Accept: 'application/json',
+            'x-px-cookie': localStorage.getItem('pxcookie') || '',
         },
     };
     if (method === 'POST') {
@@ -63,7 +66,7 @@ function generatePXContent(body, parent, cb) {
     window._pxVid = body.vid; // PerimeterX's visitor id
     window._pxUuid = body.uuid; // PerimeterX's unique user id
     window._pxHostUrl = body.hostUrl; // PerimeterX's cloud component URL
-    window.pxRenderRecaptcha();
+    window.pxRenderHumanChallenge();
     window._pxOnCaptchaSuccess = function (isValid) {
         if (isValid) {
             cb();
